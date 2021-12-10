@@ -1,0 +1,50 @@
+﻿@model ToDoList.Models.ToDo
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>To-Do List</h2>
+
+
+
+
+<div id="tableDiv"></div>
+
+
+
+<div id="todoCreateFrom">
+
+    @using (Ajax.BeginForm("AJAXCreate", "ToDoes", new AjaxOptions
+    {
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "POST",
+        UpdateTargetId = "tableDiv"
+    }))
+    {
+        <div class="form-group">
+            @Html.AntiForgeryToken()
+            <div class="input-group mb-3">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                <button class="btn btn-outline-secondary" type="submit">Add</button>
+
+            </div>
+
+        </div>
+      
+    }
+
+</div>
+
+<p>Warning: sometimes the To-Do List takes a while to show up, please wait a few seconds...</p>
+<hr />      
+
+
+@section Scripts 
+    {
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Custom_Scripts/BuildTable.js"></script>
+     @Scripts.Render("~/bundles/jqueryval")
+
+    }
